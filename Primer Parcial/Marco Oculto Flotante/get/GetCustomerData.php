@@ -15,7 +15,7 @@
     $sDBPassword = "root";
 
     //Creamos el SQL Query
-    $sQuery = "Select * from customers where CustomerId=" . $sID;
+    $sQuery = "SELECT * FROM customers WHERE CustomerId=" . $sID;
 
     //Realizamos la conexi�n
     $oLink = mysql_connect($sDBServer, $sDBUsername, $sDBPassword);
