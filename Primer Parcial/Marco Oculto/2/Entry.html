@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Captura de clientes</title>
+
+    <script type="text/javascript">
+        function saveResult(sMensaje) {
+            var divStatus = document.getElementById("divStatus");
+            divStatus.innerHTML = "Requerimiento completado: " + sMensaje;
+        }
+
+    </script>
+</head>
+
+<body>
+<form action="SaveCustomer.php" method="post" target="hiddenFrame">
+    <p>Captura los datos del cliente</p>
+
+    <p>Nombre:<input type="text" name="txtName" value=""/></p>
+
+    <p>Dirección:<input type="text" name="txtAdress" value=""/></p>
+
+    <p>Ciudad:<input type="text" name="txtCity" value=""/></p>
+
+    <p>Estado:<input type="text" name="txtState" value=""/></p>
+
+    <p>Código Postal:<input type="text" name="txtZipCode" value=""/></p>
+
+    <p>Teléfono:<input type="text" name="txtPhone" value=""/></p>
+
+    <p>Correo:<input type="text" name="txtEmail" value=""/></p>
+
+    <p><input type="submit" value="Guardar cliente"/></p>
+</form>
+<div id="divStatus"></div>
+</body>
+</html>
