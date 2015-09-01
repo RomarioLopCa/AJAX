@@ -6,11 +6,9 @@
  * Time: 08:30 AM
  */
 define('SERVER', 'localhost');
-define('DB_NAME', 'bdventas');
+define('DB_NAME', 'ajax');
 define('DB_USER', 'root');
 define('DB_PASSWORD', 'root');
-
-// realizar conexion
 
 
 function executeQuery($query)
@@ -20,9 +18,9 @@ function executeQuery($query)
     // ejecuta el query
     $result = mysqli_query($connection, $query);
 
-    if ($result != false) {
-        return "Se ha agregado el cliente con id = " . mysqli_insert_id($connection);
+    if ($result->num_rows != 0) {
+        return true;
     } else {
-        return "Ocurrió un error al insertar el dato, cliente no creado";
+        return false;
     }
 }

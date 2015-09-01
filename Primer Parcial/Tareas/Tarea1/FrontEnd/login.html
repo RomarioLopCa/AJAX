@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src="../zxml.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function sendRequest() {
+            document.getElementById("div_status").innerHTML = "";
+            var oForm = document.forms[0];
+            var sBody = getRequestBody(oForm);
+            var oXmlHttp = zXmlHttp.createRequest();
+            oXmlHttp.open('post', oForm.action, true);
+            oXmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            oXmlHttp.onreadystatechange = function () {
+                if (oXmlHttp.readyState == 4) {
+                    if (oXmlHttp.status == 200) {
+                        console.log(oXmlHttp.responseText);
+                        if (oXmlHttp.responseText == "1") {
+                            alert(oXmlHttp.responseText);
+                            window.location = "menu.php";
+                        } else {
+                            saveResult(oXmlHttp.responseText);
+                        }
+                    } else {
+                        saveResult("Ocurrió un error: " + oXmlHttp.statusText);
+                    }
+                }
+            };
+            oXmlHttp.send(sBody);
+
+        }
+
+        function getRequestBody(oForm) {
+            var aParams = [];
+
+            for (var i = 0; i < oForm.elements.length; i++) {
+                var sParam = encodeURIComponent(oForm.elements[i].name);
+                sParam += "=";
+                sParam += encodeURIComponent(oForm.elements[i].value);
+                aParams.push(sParam);
+            }
+            return aParams.join("&");
+        }
+
+        function saveResult(mensaje) {
+            var divStatus = document.getElementById("div_status");
+            divStatus.innerHTML = mensaje;
+        }
+
+    </script>
+</head>
+<body>
+
+<div style="text-align: center">
+    <form action="../BackEnd/login.php" onsubmit="sendRequest(); return false;" method="post">
+        <p>Nombre de usuario: <input type="text" name="username" id="username"></p>
+
+        <p>Contraseña: <input type="password" name="password" id="password"></p>
+
+        <p><input type="submit" value="Entrar"></p>
+    </form>
+    <div id="div_status">
+
+    </div>
+</div>
+</body>
+</html>
