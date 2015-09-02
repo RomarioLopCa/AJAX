@@ -18,8 +18,7 @@
                 if (oXmlHttp.readyState == 4) {
                     if (oXmlHttp.status == 200) {
                         console.log(oXmlHttp.responseText);
-                        if (oXmlHttp.responseText == "1") {
-                            alert(oXmlHttp.responseText);
+                        if (oXmlHttp.responseText == "l") {
                             window.location = "menu.php";
                         } else {
                             saveResult(oXmlHttp.responseText);
