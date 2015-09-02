@@ -20,7 +20,23 @@
 
         <script src="../../zxml.js" type="text/javascript"></script>
         <script type="text/javascript">
-            function sendRequest(oForm) {
+            function sendRequest(oForm, type) {
+
+                switch (type) {
+                    case "get":
+
+                        break;
+                    case "post":
+
+
+                        break;
+                    case "edit":
+
+                        break;
+                    case "delete":
+
+                        break;
+                }
                 document.getElementById("div_status").innerHTML = "";
                 var sBody = getRequestBody(oForm);
                 var oXmlHttp = zXmlHttp.createRequest();
@@ -89,7 +105,7 @@
 
         <hr>
 
-        <form action="../../BackEnd/alumno/alta.php" method="post" onsubmit="sendRequest(this); return null;"
+        <form action="../../BackEnd/alumno/alta.php" method="post" onsubmit="sendRequest(this, 'get'); return null;"
               id="alta_alumno">
             <fieldset>
                 <legend>Alta de Alumno</legend>
