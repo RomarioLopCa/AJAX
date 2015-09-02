@@ -18,7 +18,7 @@ if (!isset($_SESSION["username"])) {
         <title>AJAX Tarea 1</title>
     </head>
     <body>
-        <div style="text-align: center">
+        <center>
             <table>
                 <tr>
                     <th colspan="2">Menú</th>
@@ -28,6 +28,6 @@ if (!isset($_SESSION["username"])) {
                     <td><a href="tutor/index.html">Tutores</a></td>
                 </tr>
             </table>
-        </div>
+        </center>
     </body>
 </html>

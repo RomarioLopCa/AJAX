@@ -1,16 +1,18 @@
 <?php
 include "../bd.php";
 
-$sName = $_POST["txtName"];
-$sAddress = $_POST["txtAdress"];
-$sCity = $_POST["txtCity"];
-$sState = $_POST["txtState"];
-$sZipCode = $_POST["txtZipCode"];
-$sPhone = $_POST["txtPhone"];
-$sEmail = $_POST["txtEmail"];
+$mat = $_POST["matricula"];
+$nom = $_POST["nombre"];
+$ap = $_POST["apellido"];
+$f_nac = $_POST["fecha_nacimiento"];
+$f_ing = $_POST["fecha_ingreso"];
+$gen = $_POST["genero"];
+$email = $_POST["correo"];
+$carrera = $_POST["carrera"];
 
-$query = "Insert into customers(`Name`, `Address`, `City`, `State`, `Zip`, `Phone`, `E-mail`)" .
-    "values('$sName','$sAddress','$sCity','$sState','$sZipCode','$sPhone','$sEmail')";
+
+$query = "INSERT into alumno(matricula, nombre, apellido, fecha_nacimiento, fecha_ingreso, genero, correo, carrera)
+VALUES ($mat, $nom, $ap, $f_nac, $f_ing, $gen, $email, $carrera)";
 
 $sStatus = "";
 

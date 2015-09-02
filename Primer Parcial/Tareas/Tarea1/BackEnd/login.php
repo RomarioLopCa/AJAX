@@ -17,5 +17,5 @@ if (executeQuery($query)) {
     $_SESSION["username"] = $username;
     echo "1";
 } else {
-    echo "Usuario o contraseña inválidos";
+    echo "";
 }
