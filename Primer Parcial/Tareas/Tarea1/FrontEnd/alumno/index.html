@@ -20,15 +20,52 @@
 
         <script src="../../zxml.js" type="text/javascript"></script>
         <script type="text/javascript">
+
             function sendRequest(oForm, type) {
+                document.getElementById("span_status").innerHTML = "";
+                document.getElementById("div_consulta").innerHTML = "";
+
+                var sBody = getRequestBody(oForm);
+                var oXmlHttp = zXmlHttp.createRequest();
 
                 switch (type) {
                     case "get":
+                        var matricula = document.getElementById("matricula").value;
+                        oXmlHttp.open('get', oForm.action + matricula, true);
 
+                        oXmlHttp.onreadystatechange = function () {
+                            if (oXmlHttp.readyState == 4) {
+                                if (oXmlHttp.status == 200) {
+                                    console.log(oXmlHttp.responseText);
+                                    if (oXmlHttp.responseText != "") {
+                                        document.getElementById("div_consulta").innerHTML = oXmlHttp.responseText;
+                                    } else {
+                                        saveResult("Alumno no encontrado.");
+                                    }
+                                } else {
+                                    saveResult("Ocurrió un error: " + oXmlHttp.statusText);
+                                }
+                            }
+                        };
                         break;
                     case "post":
+                        oXmlHttp.open('post', oForm.action, true);
+                        oXmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-
+                        oXmlHttp.onreadystatechange = function () {
+                            if (oXmlHttp.readyState == 4) {
+                                if (oXmlHttp.status == 200) {
+                                    console.log(oXmlHttp.responseText);
+                                    if (oXmlHttp.responseText != "") {
+                                        saveResult(oXmlHttp.responseText);
+                                    } else {
+                                        saveResult("Error: Alumno no agregado.");
+                                    }
+                                } else {
+                                    saveResult("Ocurrió un error: " + oXmlHttp.statusText);
+                                }
+                            }
+                        };
                         break;
                     case "edit":
 
@@ -37,29 +74,10 @@
 
                         break;
                 }
-                document.getElementById("div_status").innerHTML = "";
-                var sBody = getRequestBody(oForm);
-                var oXmlHttp = zXmlHttp.createRequest();
-                oXmlHttp.open('post', oForm.action, true);
-                oXmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-                oXmlHttp.onreadystatechange = function () {
-                    if (oXmlHttp.readyState == 4) {
-                        if (oXmlHttp.status == 200) {
-                            console.log(oXmlHttp.responseText);
-                            if (oXmlHttp.responseText != "") {
-                                window.location = "menu.php";
-                                saveResult(oXmlHttp.responseText);
-                            } else {
-                                saveResult("Ocurrió un error");
-                            }
-                        } else {
-                            saveResult("Ocurrió un error: " + oXmlHttp.statusText);
-                        }
-                    }
-                };
+
                 oXmlHttp.send(sBody);
-
+                oForm.reset();
             }
 
             function getRequestBody(oForm) {
@@ -75,7 +93,7 @@
             }
 
             function saveResult(mensaje) {
-                var divStatus = document.getElementById("div_status");
+                var divStatus = document.getElementById("span_status");
                 divStatus.innerHTML = mensaje;
             }
 
@@ -97,37 +115,54 @@
                 <li>
                     <button>Bajas</button>
                 </li>
-                <li><a href="../menu.php">
-                    <button>Regresar</button>
-                </a></li>
+                <li>
+                    <a href="../menu.php">
+                        <button>Regresar</button>
+                    </a>
+                </li>
             </ul>
+            <h1>Estatus> <span id="span_status"></span></h1>
         </nav>
 
         <hr>
 
-        <form action="../../BackEnd/alumno/alta.php" method="post" onsubmit="sendRequest(this, 'get'); return null;"
+        <form action="../../BackEnd/alumno/consulta.php?matricula=" method="get"
+              onsubmit="sendRequest(this, 'get'); return false;"
+              id="consulta_alumno">
+            <fieldset>
+                <legend>Consulta de Alumno</legend>
+                <p>Matricula del alumno: <input required="true" type="text" name="matricula" id="matricula"></p>
+                <input type="submit" value="Consultar">
+
+                <div id="div_consulta"></div>
+            </fieldset>
+        </form>
+
+        <form action="../../BackEnd/alumno/alta.php" method="post"
+              onsubmit="sendRequest(this, 'post'); return false"
               id="alta_alumno">
             <fieldset>
                 <legend>Alta de Alumno</legend>
-                <p>Matricula <input type="text" name="matricula" id="matricula"></p>
+                <p>Matricula <input type="text" name="alta_matricula" id="alta_matricula" required="true"></p>
 
-                <p>Nombre <input type="text" name="nombre" id="nombre"></p>
+                <p>Nombre <input type="text" name="nombre" id="nombre" required="true"></p>
 
-                <p>Apellidos <input type="text" name="apellido" id="apellido"></p>
+                <p>Apellidos <input type="text" name="apellido" id="apellido" required="true"></p>
 
-                <p>Fecha de Nacimiento <input type="date" name="fecha_nacimiento" id="fecha_nacimiento"></p>
-
-                <p>Fecha de Ingreso <input type="date" name="fecha_ingreso" id="fecha_ingreso"></p>
-
-                <p>Genero
-                    <input type="radio" name="genero" value="M">Masculino
-                    <input type="radio" name="genero" value="F">Femenino
+                <p>Fecha de Nacimiento <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" required="true">
                 </p>
 
-                <p>Correo <input type="text" name="correo" id="correo"></p>
+                <p>Fecha de Ingreso <input type="date" name="fecha_ingreso" id="fecha_ingreso" required="true"></p>
+
+                <p>Genero
+                    <input type="radio" name="genero" value="M" required="true">Masculino
+                    <input type="radio" name="genero" value="F" required="true">Femenino
+                </p>
+
+                <p>Correo <input type="text" name="correo" id="correo" required="true"></p>
 
                 <p>Carrera
-                    <select name="carrera" id="carrera">
+                    <select name="carrera" id="carrera" required="true">
                         <option value="LIS">Software</option>
                         <option value="LCC">Computación</option>
                         <option value="LM">Matemáticas</option>

@@ -1,7 +1,7 @@
 <?php
 include "../bd.php";
 
-$mat = $_POST["matricula"];
+$mat = $_POST["alta_matricula"];
 $nom = $_POST["nombre"];
 $ap = $_POST["apellido"];
 $f_nac = $_POST["fecha_nacimiento"];
@@ -11,16 +11,15 @@ $email = $_POST["correo"];
 $carrera = $_POST["carrera"];
 
 
-$query = "INSERT into alumno(matricula, nombre, apellido, fecha_nacimiento, fecha_ingreso, genero, correo, carrera)
-VALUES ($mat, $nom, $ap, $f_nac, $f_ing, $gen, $email, $carrera)";
+$query = "INSERT INTO alumno(matricula, nombre, apellido, fecha_nacimiento, fecha_ingreso, genero, correo, carrera)
+VALUES ('$mat', '$nom', '$ap', '$f_nac', '$f_ing', '$gen', '$email', '$carrera')";
 
-$sStatus = "";
-
+$status = "";
 if (executeQuery($query)) {
-    $sStatus = "Se ha agregado el alumno";
+    $status = "Se ha agregado el alumno";
 } else {
-    $sStatus = "Ocurrió un error al agregar el alumno";
+    $status = "";
 }
 
-echo $sStatus;
+echo $status;
 
