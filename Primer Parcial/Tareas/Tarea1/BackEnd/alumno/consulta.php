@@ -5,7 +5,6 @@
  * Date: 2/09/15
  * Time: 06:02 PM
  */
-header("Content-Type:text/plain");
 define('SERVER', 'localhost');
 define('DB_NAME', 'ajax');
 define('DB_USER', 'root');
