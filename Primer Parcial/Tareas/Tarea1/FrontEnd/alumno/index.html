@@ -40,7 +40,7 @@
                                     if (oXmlHttp.responseText != "") {
                                         document.getElementById("div_consulta").innerHTML = oXmlHttp.responseText;
                                     } else {
-                                        saveResult("Alumno no encontrado.");
+                                        saveResult("Error: Alumno no encontrado.");
                                     }
                                 } else {
                                     saveResult("Ocurrió un error: " + oXmlHttp.statusText);
@@ -71,13 +71,39 @@
 
                         break;
                     case "delete":
+                        oXmlHttp.open('post', oForm.action, true);
+                        oXmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
+                        oXmlHttp.onreadystatechange = function () {
+                            if (oXmlHttp.readyState == 4) {
+                                if (oXmlHttp.status == 200) {
+                                    console.log(oXmlHttp.responseText);
+                                    if (oXmlHttp.responseText != "") {
+                                        saveResult(oXmlHttp.responseText);
+                                    } else {
+                                        saveResult("Error: Alumno no eliminado.");
+                                    }
+                                } else {
+                                    saveResult("Ocurrió un error: " + oXmlHttp.statusText);
+                                }
+                            }
+                        };
                         break;
                 }
 
 
                 oXmlHttp.send(sBody);
                 oForm.reset();
+            }
+
+            function hideForms(iForm) {
+                for (var i = 0; i < document.forms.length; i++) {
+                    if (i == iForm) {
+                        document.forms[i].style.display = "block";
+                        continue;
+                    }
+                    document.forms[i].style.display = "none";
+                }
             }
 
             function getRequestBody(oForm) {
@@ -104,16 +130,13 @@
             <h1>Gestión de Alumnos</h1>
             <ul>
                 <li>
-                    <button>Altas</button>
+                    <button onclick="hideForms('0')">Altas</button>
                 </li>
                 <li>
-                    <button>Consultas</button>
+                    <button onclick="hideForms('1')">Consultas</button>
                 </li>
                 <li>
-                    <button>Modificaciones</button>
-                </li>
-                <li>
-                    <button>Bajas</button>
+                    <button onclick="hideForms('2')">Bajas</button>
                 </li>
                 <li>
                     <a href="../menu.php">
@@ -126,21 +149,10 @@
 
         <hr>
 
-        <form action="../../BackEnd/alumno/consulta.php?matricula=" method="get"
-              onsubmit="sendRequest(this, 'get'); return false;"
-              id="consulta_alumno">
-            <fieldset>
-                <legend>Consulta de Alumno</legend>
-                <p>Matricula del alumno: <input required="true" type="text" name="matricula" id="matricula"></p>
-                <input type="submit" value="Consultar">
-
-                <div id="div_consulta"></div>
-            </fieldset>
-        </form>
 
         <form action="../../BackEnd/alumno/alta.php" method="post"
               onsubmit="sendRequest(this, 'post'); return false"
-              id="alta_alumno">
+              id="alta_alumno" hidden>
             <fieldset>
                 <legend>Alta de Alumno</legend>
                 <p>Matricula <input type="text" name="alta_matricula" id="alta_matricula" required></p>
@@ -155,17 +167,18 @@
                 <p>Fecha de Ingreso <input type="date" name="fecha_ingreso" id="fecha_ingreso" required></p>
 
                 <p>Genero
-                    <input type="radio" name="genero" value="M" required>Masculino
-                    <input type="radio" name="genero" value="F" required>Femenino
+                    <input type="radio" name="genero" value="Masculino" required>Masculino
+                    <input type="radio" name="genero" value="Femenino" required>Femenino
                 </p>
 
                 <p>Correo <input type="text" name="correo" id="correo" required></p>
 
                 <p>Carrera
                     <select name="carrera" id="carrera" required="true">
-                        <option value="LIS">Software</option>
-                        <option value="LCC">Computación</option>
-                        <option value="LM">Matemáticas</option>
+                        <option disabled selected> -- Elige --</option>
+                        <option value="Ingenieria de Software">LIS</option>
+                        <option value="Ciencas de la Computacion">LCC</option>
+                        <option value="Licenciada en Matematicas">LM</option>
                     </select>
                 </p>
 
@@ -174,8 +187,27 @@
             </fieldset>
         </form>
 
-        <form action="../../BackEnd/alumno/baja.php">
+        <form action="../../BackEnd/alumno/consulta.php?matricula=" method="get"
+              onsubmit="sendRequest(this, 'get'); return false;"
+              id="consulta_alumno" hidden>
+            <fieldset>
+                <legend>Consulta de Alumno</legend>
+                <p>Matricula del alumno: <input required="true" type="text" name="matricula" id="matricula"></p>
+                <input type="submit" value="Consultar">
 
+                <div id="div_consulta"></div>
+            </fieldset>
+        </form>
+
+
+        <form action="../../BackEnd/alumno/baja.php" method="post" onsubmit="sendRequest(this, 'delete'); return false"
+              hidden>
+            <fieldset>
+                <legend>Dar de baja un alumno</legend>
+                <p>Matricula del alumno: <input required="true" type="text" name="baja_matricula"
+                                                id="baja_matricula" required></p>
+                <input type="submit" value="Consultar">
+            </fieldset>
         </form>
     </body>
 </html>

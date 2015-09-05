@@ -26,6 +26,7 @@ if (!isset($_SESSION["username"])) {
                 <tr>
                     <td><a href="alumno/index.html">Alumnos</a></td>
                     <td><a href="tutor/index.html">Tutores</a></td>
+                    <td><a href="../BackEnd/logout.php">Log out</a></td>
                 </tr>
             </table>
         </center>

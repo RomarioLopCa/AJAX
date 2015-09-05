@@ -18,7 +18,7 @@ function executeQuery($query)
     // ejecuta el query
     $result = mysqli_query($connection, $query);
 
-    if ($result != false or $result->num_rows != 0) {
+    if ($result->num_rows != 0 or $connection->affected_rows != 0) {
         return true;
     } else {
         return false;

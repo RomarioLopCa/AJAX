@@ -7,10 +7,10 @@
  */
 include "../bd.php";
 
-$matricula = $_POST["matricula"];
+$matricula = $_POST["baja_matricula"];
 
 $query = "DELETE FROM alumno WHERE  matricula = '$matricula'";
-
+//echo $query;
 
 $status = "";
 if (executeQuery($query)) {
