@@ -1,24 +1,23 @@
 <?php
 include "../bd.php";
 
-$sName = $_POST["txtName"];
-$sAddress = $_POST["txtAdress"];
-$sCity = $_POST["txtCity"];
-$sState = $_POST["txtState"];
-$sZipCode = $_POST["txtZipCode"];
-$sPhone = $_POST["txtPhone"];
-$sEmail = $_POST["txtEmail"];
+$clv = $_POST["alta_clave"];
+$nom = $_POST["nombre"];
+$ap = $_POST["apellido"];
+$gen = $_POST["genero"];
+$area = $_POST["area"];
+$email = $_POST["correo"];
 
-$query = "Insert into customers(`Name`, `Address`, `City`, `State`, `Zip`, `Phone`, `E-mail`)" .
-    "values('$sName','$sAddress','$sCity','$sState','$sZipCode','$sPhone','$sEmail')";
 
-$sStatus = "";
+$query = "INSERT INTO tutor(clave, nombre, apellido, genero, area, email)
+VALUES ('$clv', '$nom', '$ap', '$gen', '$area', '$email')";
 
+$status = "";
 if (executeQuery($query)) {
-    $sStatus = "Se ha agregado el alumno";
+    $status = "Se ha agregado el tutor";
 } else {
-    $sStatus = "Ocurrió un error al agregar el alumno";
+    $status = "";
 }
 
-echo $sStatus;
+echo $status;
 
