@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+
+        <script src="../../jQuery/jquery-1.11.3.js"></script>
+        <script type="text/javascript">
+
+            $(function () {
+                var button = "<p id='boton'><input type='submit' value='Guardar'></p>";
+                $("#alta_alumno fieldset").append(button);
+
+                var div = "<div id='datos'>" +
+                        "<textarea name='datos_formulario' id='datos_formulario' cols='130' rows='10'>" +
+                        "</textarea>" +
+                        "</div>";
+
+                $('body').append(div);
+
+//                $("input[type='text'], input[type='date']").on("change", showValues);
+//                $("select").on("change", showValues);
+//                showValues();
+
+            });
+
+            function showValues() {
+                var str = $("#alta_alumno").serialize();
+                $("#datos_formulario").text(str);
+            }
+
+
+            function enviar() {
+                var matricula = $('#alta_matricula').val();
+                var nombre = $('#nombre').val();
+                $.ajax({
+                    url: 'alta.php',
+                    type: 'post',
+                    data: $('#alta_alumno').serialize(),
+                    success: function (respuesta) {
+                        alert("Datos enviados: " + respuesta);
+                        $('#tabla tbody').append("<tr><td>" + matricula + "</td>" + "<td>" + nombre + "</td>" + "<td>Si</td><tr>");
+                    },
+                    error: function () {
+                        alert('Ocurrió un error');
+                        $('#tabla tbody').append("<tr><td>" + matricula + "</td>" + "<td>" + nombre + "</td>" + "<td>Si</td></tr>");
+                    }
+                });
+                showValues();
+            }
+        </script>
+
+    </head>
+
+    <body>
+        <form action="" method="post"
+              onsubmit="enviar(); return false"
+              id="alta_alumno">
+            <fieldset>
+                <legend>Alta de Alumno</legend>
+                <p>Matricula <input type="text" name="alta_matricula" id="alta_matricula" required></p>
+
+                <p>Nombre <input type="text" name="nombre" id="nombre" required></p>
+
+                <p>Apellidos <input type="text" name="apellido" id="apellido" required></p>
+
+                <p>Fecha de Nacimiento <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" required>
+                </p>
+
+                <p>Fecha de Ingreso <input type="date" name="fecha_ingreso" id="fecha_ingreso" required></p>
+
+                <p>Genero
+                    <select name="genero" id="genero" required="true">
+                        <option disabled selected> -- Elige --</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
+                </p>
+
+                <p>Correo <input type="text" name="correo" id="correo" required></p>
+
+                <p>Carrera
+                    <select name="carrera" id="carrera" required="true">
+                        <option disabled selected> -- Elige --</option>
+                        <option value="Ingenieria de Software">LIS</option>
+                        <option value="Ciencas de la Computacion">LCC</option>
+                        <option value="Licenciada en Matematicas">LM</option>
+                    </select>
+                </p>
+
+
+            </fieldset>
+        </form>
+
+        <br>
+
+        <table border="1" id="tabla">
+            <thead>
+                <tr>
+                    <th>Matricula</th>
+                    <th>Nombre</th>
+                    <th>Agregado</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+
+        </table>
+        <br><br><br>
+
+    </body>
+</html>
