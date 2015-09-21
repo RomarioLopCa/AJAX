@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>jQuery UI</title>
+        <link rel="stylesheet" href="../jQuery%20UI/jquery-ui.css">
+        <link rel="stylesheet" href="../jQuery%20UI/jquery-ui.theme.css">
+
+        <script src="../jQuery%20UI/external/jquery/jquery.js"></script>
+        <script src="../jQuery%20UI/jquery-ui.js"></script>
+    </head>
+
+    <style>
+        .toggler {
+            width: 500px;
+            height: 200px;
+            position: relative;
+        }
+
+        #button {
+            padding: .5em 1em;
+            text-decoration: none;
+        }
+
+        #effect {
+            width: 240px;
+            height: 135px;
+            padding: 0 .4em;
+            position: relative;
+        }
+
+        #effect h3 {
+            margin: 0;
+            padding: 0 .4em;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $('button').click(function () {
+                performEffect($(this).val());
+            });
+        });
+
+        function performEffect(effect_type) {
+            $('#effect').effect(effect_type, 'slow', 500);
+        }
+    </script>
+    <body>
+        <div class="toggler">
+            <div id="effect" class="ui-widget-content ui-corner-all">
+                <h3 class="ui-widget-content ui-corner-all">Efecto</h3>
+
+                <p>div al que se le aplican efectos</p>
+            </div>
+        </div>
+        <div>
+            <button class="ui-widget-content ui-corner-all" value="blind">Blind</button>
+            <button class="ui-widget-content ui-corner-all" value="bounce">Bounce</button>
+            <button class="ui-widget-content ui-corner-all" value="clip">Clip</button>
+            <button class="ui-widget-content ui-corner-all" value="drop">Drop</button>
+            <button class="ui-widget-content ui-corner-all" value="explode">Explode</button>
+            <button class="ui-widget-content ui-corner-all" value="fade">Fade</button>
+            <button class="ui-widget-content ui-corner-all" value="fold">Fold</button>
+            <button class="ui-widget-content ui-corner-all" value="highlight">Highlight</button>
+            <button class="ui-widget-content ui-corner-all" value="puff">Puff</button>
+            <button class="ui-widget-content ui-corner-all" value="pulsate">Pulsate</button>
+            <button class="ui-widget-content ui-corner-all" value="scale">Scale</button>
+            <button class="ui-widget-content ui-corner-all" value="shake">Shake</button>
+            <button class="ui-widget-content ui-corner-all" value="size">Size</button>
+            <button class="ui-widget-content ui-corner-all" value="slide">Slide</button>
+            <button class="ui-widget-content ui-corner-all" value="transfer">Transfer</button>
+        </div>
+    </body>
+</html>
