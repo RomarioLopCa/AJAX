@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Práctica 2 con jQuery UI</title>
+
+        <link rel="stylesheet" href="../jQuery%20UI/jquery-ui.css">
+        <link rel="stylesheet" href="../jQuery%20UI/jquery-ui.theme.css">
+
+        <script src="../jQuery%20UI/external/jquery/jquery.js"></script>
+        <script src="../jQuery%20UI/jquery-ui.js"></script>
+
+        <script type="text/javascript">
+            $(function () {
+                $('#etiquetas').tabs();
+                $('#accordion').accordion();
+                $('#dialogo').dialog({
+                    autoOpen: false,
+                    buttons: {
+                        'Guardar': function () {
+                            $('#etiquetas, #accordion').effect('explode', 5000, 500);
+                        },
+                        'Salir': function () {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+
+                $('#btn_dialogo').click(function () {
+                    captura();
+                });
+
+                $('#fecha').datepicker();
+
+            });
+
+            function captura() {
+                $('#dialogo').dialog('open');
+            }
+        </script>
+    </head>
+    <body>
+        <p>Fecha: <input type="text" name="fecha" id="fecha"/></p>
+
+        <p>
+            <button id="btn_dialogo">asdasddasd</button>
+        </p>
+        <div id="etiquetas">
+            <ul>
+                <li><a href="#etiqueta_1">Datos personales</a></li>
+                <li><a href="#etiqueta_2">Datos laborales</a></li>
+                <li><a href="#etiqueta_3">Estudios</a></li>
+            </ul>
+            <div id="etiqueta_1">
+                <p>Nombre:</p>
+
+                <p>Direccion:</p>
+
+                <p>Telefono:</p>
+            </div>
+            <div id="etiqueta_2">
+                <p>Puesto:</p>
+
+                <p>Salario:</p>
+
+                <p>Fecha ingreso:</p>
+            </div>
+            <div id="etiqueta_3">
+                <p>Escuela:</p>
+
+                <p>Semestre:</p>
+
+                <p>Promedio:</p>
+            </div>
+        </div>
+
+        <p>Ahora el accordion</p>
+
+        <div id="accordion">
+            <h3>Datos Personales</h3>
+
+            <div>
+                <p>Nombre:</p>
+
+                <p>Direccion:</p>
+
+                <p>Telefono:</p>
+            </div>
+
+            <h3>Datos de Trabajo</h3>
+
+            <div>
+                <p>Puesto:</p>
+
+                <p>Salario:</p>
+
+                <p>Fecha ingreso:</p>
+            </div>
+
+            <h3>Datos Academicos</h3>
+
+            <div>
+                <p>Escuela:</p>
+
+                <p>Semestre:</p>
+
+                <p>Promedio:</p>
+            </div>
+
+
+            <div id="dialogo" title="Capturar Datos">
+                <form action="">
+                    <fieldset>
+                        <p>Nombre: <input type="text" name="name" id="name"/></p>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+    </body>
+</html>
