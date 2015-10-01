@@ -19,10 +19,7 @@
                 var button_consulta = "<p id='boton'><input type='submit' value='Consultar'></p>";
                 $("#consulta_alumno").append(button_consulta);
 
-                var div = "<div id='datos'>" +
-                        "<textarea name='datos_formulario' id='datos_formulario' cols='130' rows='10'>" +
-                        "</textarea>" +
-                        "</div>";
+                var div = "<div id='datos'>" + "</div>";
 
                 $('body').append(div);
 
@@ -30,16 +27,34 @@
 
                 $('#nombre_consulta').autocomplete({
                     source: function (request, response) {
-                        jQuery.get("usernames.action", {
+                        jQuery.get("autocomplete_nombres.php", {
                             query: request.term
                         }, function (data) {
+                            console.log(data);
                             // assuming data is a JavaScript array such as
                             // ["one@abc.de", "onf@abc.de","ong@abc.de"]
                             // and not a string
-                            response(data);
+                            data_array = data.split(",");
+                            response(data_array);
                         });
                     },
-                    minLength: 3
+                    minLength: 1
+                });
+
+                $('#apellido_consulta').autocomplete({
+                    source: function (request, response) {
+                        jQuery.get("autocomplete_apellidos.php", {
+                            query: request.term
+                        }, function (data) {
+                            console.log(data);
+                            // assuming data is a JavaScript array such as
+                            // ["one@abc.de", "onf@abc.de","ong@abc.de"]
+                            // and not a string
+                            data_array = data.split(",");
+                            response(data_array);
+                        });
+                    },
+                    minLength: 1
                 });
 
                 $('input[type=submit]').button();
@@ -47,10 +62,7 @@
 
             });
 
-            function showValues() {
-                var str = $("#alta_alumno").serialize();
-                $("#datos_formulario").text(str);
-            }
+
 
 
             function enviar() {
@@ -63,12 +75,28 @@
                     success: function (respuesta) {
                         alert("Datos enviados: " + respuesta);
                         $('#tabla tbody').append("<tr><td>" + matricula + "</td>" + "<td>" + nombre + "</td>" + "<td>Si</td><tr>");
+
                     },
                     error: function () {
                         alert('Ocurrió un error');
                     }
                 });
-                showValues();
+            }
+
+            function consultar() {
+                $.ajax({
+                    url: 'consulta.php',
+                    type: 'get',
+                    data: $('#consulta_alumno').serialize(),
+                    success: function (respuesta) {
+                        //alert("Datos enviados: " + respuesta);
+                        //$('#tabla tbody').append("<tr><td>" + matricula + "</td>" + "<td>" + nombre + "</td>" + "<td>Si</td><tr>");
+                        $('#datos').html(respuesta);
+                    },
+                    error: function () {
+                        alert('Ocurrió un error');
+                    }
+                });
             }
         </script>
 
@@ -118,34 +146,17 @@
                 </form>
             </div>
             <div id="tab_consulta">
-                <form action="" id="consulta_alumno">
+                <form action="" id="consulta_alumno" onsubmit="consultar(); return false;">
                     <p>Nombre: <input type="text" name="nombre_consulta" id="nombre_consulta" required/></p>
 
                     <p>Apellido: <input type="text" name="apellido_consulta" id="apellido_consulta" required/></p>
                 </form>
-            </div>
-            <div id="etiqueta_3">
-
             </div>
         </div>
 
 
         <br>
 
-        <table border="1" id="tabla">
-            <thead>
-                <tr>
-                    <th>Matricula</th>
-                    <th>Nombre</th>
-                    <th>Agregado</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-
-        </table>
-        <br><br><br>
 
     </body>
 </html>

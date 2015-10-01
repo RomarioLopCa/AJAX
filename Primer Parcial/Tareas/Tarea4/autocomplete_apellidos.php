@@ -14,12 +14,12 @@ function executeQuery($query)
 
     $names = "";
     while ($row =$result->fetch_assoc()) {
-        $names = $names . $row['nombre'] . ",";
+        $names = $names . $row['apellido'] . ",";
     }
     return $names;
 }
 
 
 
-$query = executeQuery("SELECT nombre FROM alumno WHERE nombre LIKE '" . $_GET['query'] . "%'");
+$query = executeQuery("SELECT apellido FROM alumno WHERE apellido LIKE '" . $_GET['query'] . "%'");
 echo $query;
